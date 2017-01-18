@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
-    "mongo:win": "\"C:\\Program Files\\MongoDB\\Server\\3.4\\bin\\mongod.exe\"",
+    "test": "nodemon --exec \"mocha\"",
+    "mongo:win": "C:\\Program Files\\MongoDB\\Server\\3.4\\bin\\mongod.exe",
     "mongo:mac": ""
   },
   "author": "",
