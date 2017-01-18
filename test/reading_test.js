@@ -12,7 +12,7 @@ describe('Reading users out of the database', () => {
   it('finds all users with a name of joe', (done) => {
     User.find({ name: 'Joe' })
       .then((users) => {
-        // console.log(users)
+        
         expect(users)
           .to.have.lengthOf(1)
 
@@ -22,7 +22,5 @@ describe('Reading users out of the database', () => {
         done()
       })
       .catch(console.error)
-
-    expect().to
   })
 })
