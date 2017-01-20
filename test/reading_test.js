@@ -2,11 +2,21 @@ const { expect } = require('chai')
 const User = require('../src/user')
 
 describe('Reading users out of the database', () => {
-  let joe
+  let alex, joe, maria, zach
 
   beforeEach((done) => {
+    alex = new User({ name: 'Alex' })
     joe = new User({ name: 'Joe' })
-    joe.save().then(() => done())
+    maria = new User({ name: 'Maria' })
+    zach = new User({ name: 'Zach' })
+    
+    Promise.all([
+      alex.save(),
+      joe.save(),
+      maria.save(),
+      zach.save()
+    ])
+    .then(() => done())
   })
 
   it('finds all users with a name of joe', (done) => {
@@ -27,6 +37,32 @@ describe('Reading users out of the database', () => {
     User.findOne({ _id: joe._id })
       .then((user) => {
         expect(user.name).to.equal('Joe')
+        done()
+      })
+  })
+
+  it('can skip and limit the result set', (done) => {
+    User.find({})
+      .sort({ name: 1 }) // sort ascending by name
+      .skip(1)
+      .limit(2)
+      .then((users) => {
+        // console.log(JSON.stringify(users, undefined, 2))
+
+        expect(users)
+          .to.be.an('array')
+          .with.lengthOf(2)
+
+        expect(users[0])
+          .to.be.an('object')
+          .with.property('name')
+          .which.equals('Joe')
+
+        expect(users[1])
+          .to.be.an('object')
+          .with.property('name')
+          .which.equals('Maria')
+
         done()
       })
   })
